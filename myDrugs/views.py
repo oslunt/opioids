@@ -8,7 +8,13 @@ def indexPageView(request):
     return render(request, "myDrugs/index.html")
 
 def searchPageView(request):
-    return HttpResponse("This is search")
+    return render(request, "myDrugs/search.html")
 
 def detailsPageView(request):
-    return HttpResponse("This is details")
+    return render(request, "myDrugs/details.html")
+
+def recordsPageView(request):
+    return render(request, "myDrugs/records.html")
+
+def analysisPageView(request):
+    return render(request, "myDrugs/analysis.html")

@@ -93,3 +93,30 @@ th {
 tr {
     color: lightgrey;
 }
+
+
+/*==========records page===========*/
+
+.body-records {
+    margin-left: 40px;
+    margin-right: 40px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.body-text-records {
+    padding: 40px 100px;
+    font-size: 18px;
+    top: 5.5em;
+    height: 100%;
+    right: 80px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5.5em;
+}
+
+.search-bar-records {
+    max-width: 600px;
+}

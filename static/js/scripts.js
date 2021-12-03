@@ -1,8 +1,8 @@
 /*!
-* Start Bootstrap - Agency v7.0.10 (https://startbootstrap.com/theme/agency)
-* Copyright 2013-2021 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-agency/blob/master/LICENSE)
-*/
+ * Start Bootstrap - Agency v7.0.10 (https://startbootstrap.com/theme/agency)
+ * Copyright 2013-2021 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-agency/blob/master/LICENSE)
+ */
 //
 // Scripts
 // 
@@ -10,7 +10,7 @@
 window.addEventListener('DOMContentLoaded', event => {
 
     // Navbar shrink function
-    var navbarShrink = function () {
+    var navbarShrink = function() {
         const navbarCollapsible = document.body.querySelector('#mainNav');
         if (!navbarCollapsible) {
             return;
@@ -43,7 +43,7 @@ window.addEventListener('DOMContentLoaded', event => {
     const responsiveNavItems = [].slice.call(
         document.querySelectorAll('#navbarResponsive .nav-link')
     );
-    responsiveNavItems.map(function (responsiveNavItem) {
+    responsiveNavItems.map(function(responsiveNavItem) {
         responsiveNavItem.addEventListener('click', () => {
             if (window.getComputedStyle(navbarToggler).display !== 'none') {
                 navbarToggler.click();
@@ -51,4 +51,29 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
+});
+
+//////////crud JS
+$(document).ready(function() {
+    // Activate tooltip
+    $('[data-toggle="tooltip"]').tooltip();
+
+    // Select/Deselect checkboxes
+    var checkbox = $('table tbody input[type="checkbox"]');
+    $("#selectAll").click(function() {
+        if (this.checked) {
+            checkbox.each(function() {
+                this.checked = true;
+            });
+        } else {
+            checkbox.each(function() {
+                this.checked = false;
+            });
+        }
+    });
+    checkbox.click(function() {
+        if (!this.checked) {
+            $("#selectAll").prop("checked", false);
+        }
+    });
 });

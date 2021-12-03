@@ -11240,6 +11240,7 @@ header.masthead {
     text-align: center;
     color: #fff;
     background-image: url('../img/header-bg.jpg');
+    /*check this*/
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center center;

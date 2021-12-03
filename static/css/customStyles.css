@@ -2,10 +2,20 @@ body {
     margin: 0;
 }
 
-#mainNav {
+
+/*#mainNav {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     border: none;
     background-color: #212529;
     transition: padding-top 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
 }
+
+.masthead>img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -6;
+}*/

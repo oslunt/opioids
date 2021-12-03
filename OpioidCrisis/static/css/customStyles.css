@@ -18,3 +18,78 @@ body {
     bottom: 0;
     z-index: -6;
 }
+
+.sidebar {
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    left: 0;
+    top: 5.5em;
+    bottom: 0;
+    padding-top: 10px;
+    background-color: rgb(236, 236, 236);
+    border-right: 3px solid darkgrey;
+}
+
+.sidebar div {
+    padding: 8px;
+    font-size: 24px;
+    display: block;
+}
+
+.body-text {
+    margin-left: 300px;
+    font-size: 18px;
+    top: 5.5em;
+    height: 100%;
+    right: 80px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5.5em;
+}
+
+.body-search {
+    margin-left: 40px;
+    margin-right: 40px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.body-results {
+    right: 80px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.body-results-light {
+    right: 80px;
+    display: flex;
+    justify-content: space-evenly;
+    color: rgb(236, 236, 236);
+}
+
+input {
+    width: 100%;
+}
+
+.mytable {
+    margin-left: 80px;
+    margin-right: 80px;
+    text-align: center;
+}
+
+th {
+    border-bottom: 1.5px solid rgb(236, 236, 236);
+    padding: 5px;
+}
+
+.trheader {
+    color: black;
+    font-size: larger;
+}
+
+tr {
+    color: lightgrey;
+}

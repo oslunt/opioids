@@ -2,59 +2,70 @@
 {% load static %}
 {%block content%}
 
-<br><br>
-<h2>CSS Layout Float</h2>
-<p>In this example, we have created a header, two columns/boxes and a footer. On smaller screens, the columns will stack on top of each other.</p>
-<p>Resize the browser window to see the responsive effect (you will learn more about this in our next chapter - HTML Responsive.)</p>
-<header>
-  <h2>Cities</h2>
-</header>
-
-<section>
-  <nav>
-    <ul>
-      <li><a href="#">London</a></li>
-      <li><a href="#">Paris</a></li>
-      <li><a href="#">Tokyo</a></li>
-    </ul>
-  </nav>
+<div class="sidebar"> 
+  <div>Menu Item 1</div>
+  <div>Menu Item 2</div>
+  <div>Menu Item 3</div>
+</div>
   
-  <article>
-    <h1>London</h1>
-    <p>London is the capital city of England. It is the most populous city in the  United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
-    <p>Standing on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium.</p>
-  </article>
-</section>
-<section>
-    <nav>
-      <ul>
-        <li><a href="#">London</a></li>
-        <li><a href="#">Paris</a></li>
-        <li><a href="#">Tokyo</a></li>
-      </ul>
-    </nav>
-    
-    <article>
-      <h1>London</h1>
-      <p>London is the capital city of England. It is the most populous city in the  United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
-      <p>Standing on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium.</p>
-    </article>
-  </section>
-  <section>
-    <nav>
-      <ul>
-        <li><a href="#">London</a></li>
-        <li><a href="#">Paris</a></li>
-        <li><a href="#">Tokyo</a></li>
-      </ul>
-    </nav>
-    
-    <article>
-      <h1>London</h1>
-      <p>London is the capital city of England. It is the most populous city in the  United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
-      <p>Standing on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium.</p>
-    </article>
-  </section>
+<div class="body-text">
+<!-- body content -->
+  <div class="body-search">
+    <form>
+      <input type="search" id="search" placeholder="Search"/>
+    </form>
+  </div>
+  <table class="mytable">
+    <tr class="trheader">
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Credentials</th>
+      <th>Location</th>
+      <th>Specialty</th>
+      <th></th>
+    </tr>
+    <tr>
+      <th>Result 1</th>
+      <th>Result 2</th>
+      <th>Result 3</th>
+      <th>Result 4</th>
+      <th>Result 5</th>
+      <th>Result 6</th>
+    </tr>
+    <tr>
+      <th>Result 1</th>
+      <th>Result 2</th>
+      <th>Result 3</th>
+      <th>Result 4</th>
+      <th>Result 5</th>
+      <th>Result 6</th>
+    </tr>
+    <tr>
+      <th>Result 1</th>
+      <th>Result 2</th>
+      <th>Result 3</th>
+      <th>Result 4</th>
+      <th>Result 5</th>
+      <th>Result 6</th>
+    </tr>
+    <tr>
+      <th>Result 1</th>
+      <th>Result 2</th>
+      <th>Result 3</th>
+      <th>Result 4</th>
+      <th>Result 5</th>
+      <th>Result 6</th>
+    </tr>
+    <tr>
+      <th>Result 1</th>
+      <th>Result 2</th>
+      <th>Result 3</th>
+      <th>Result 4</th>
+      <th>Result 5</th>
+      <th>Result 6</th>
+    </tr>
+  </table>
+</div>
 
 
 

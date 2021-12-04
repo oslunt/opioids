@@ -146,6 +146,7 @@ a.btn.btn-primary.edit-delete {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .record-name {
@@ -269,4 +270,15 @@ a.pres-form-sub {
     text-decoration: none;
     padding: 11.5px 26px;
     cursor: pointer;
+}
+
+.search-form {
+    display: flex;
+    margin-bottom: 0;
+}
+
+#record-search {
+    width: 261px;
+    margin-right: 6px;
+    padding: 0px;
 }

@@ -24,7 +24,7 @@ body {
     width: 300px;
     position: fixed;
     left: 0;
-    top: 5.5em;
+    top: 4.5em;
     bottom: 0;
     padding-top: 10px;
     background-color: rgb(236, 236, 236);
@@ -33,7 +33,7 @@ body {
 
 .sidebar div {
     padding: 8px;
-    font-size: 24px;
+    font-size: 18px;
     display: block;
 }
 
@@ -119,4 +119,17 @@ tr {
 
 .search-bar-records {
     max-width: 600px;
+}
+
+select {
+    width: 100%;
+}
+
+button[type="submit"] {
+    float: right;
+    border-radius: 12px;
+}
+
+.right {
+    float: right;
 }

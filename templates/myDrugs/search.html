@@ -3,18 +3,26 @@
 {%block content%}
 
 <div class="sidebar"> 
-  <div>Menu Item 1</div>
-  <div>Menu Item 2</div>
-  <div>Menu Item 3</div>
+  <div>
+    <br>
+    <p>Choose Type</p>
+    <form method="POST" action="{% url 'search' %}"> {% csrf_token %}
+      <select name="database" id="database">
+        <option value="Prescriber">Prescriber</option>
+        <option value="Drug">Drug</option>
+      </select><br><br>
+      <button type="submit">Select</button>
+    </form>
+  </div>
 </div>
   
-<div class="body-text">
-<!-- body content -->
+<!--<div class="body-text">
   <div class="body-search">
     <form>
       <input type="search" id="search" placeholder="Search"/>
     </form>
   </div>
+  {% if 'Prescriber' in type %}
   <table class="mytable">
     <tr class="trheader">
       <th>Name</th>
@@ -24,48 +32,47 @@
       <th>Specialty</th>
       <th></th>
     </tr>
-    <tr>
-      <th>Result 1</th>
-      <th>Result 2</th>
-      <th>Result 3</th>
-      <th>Result 4</th>
-      <th>Result 5</th>
-      <th>Result 6</th>
-    </tr>
-    <tr>
-      <th>Result 1</th>
-      <th>Result 2</th>
-      <th>Result 3</th>
-      <th>Result 4</th>
-      <th>Result 5</th>
-      <th>Result 6</th>
-    </tr>
-    <tr>
-      <th>Result 1</th>
-      <th>Result 2</th>
-      <th>Result 3</th>
-      <th>Result 4</th>
-      <th>Result 5</th>
-      <th>Result 6</th>
-    </tr>
-    <tr>
-      <th>Result 1</th>
-      <th>Result 2</th>
-      <th>Result 3</th>
-      <th>Result 4</th>
-      <th>Result 5</th>
-      <th>Result 6</th>
-    </tr>
-    <tr>
-      <th>Result 1</th>
-      <th>Result 2</th>
-      <th>Result 3</th>
-      <th>Result 4</th>
-      <th>Result 5</th>
-      <th>Result 6</th>
-    </tr>
+    {% for row in page_obj %}
+      <tr>
+        <th>{{row.fname}} {{row.lname}}</th>
+        <th>{{row.gender}}</th>
+        <th>
+          {% for credential in row.prescribercredential %}
+            {{credential.credential}}
+          {% endfor %}
+        </th>
+        <th>{{row.state}}</th>
+        <th>{{row.specialty}}</th>
+        <th><a>Details</a></th>
+      </tr>
+    {% endfor %}
   </table>
-</div>
+  {{type}}
+  {{cred}}
+  <div class="right">
+    <div class="pagination">
+      <span class="step-links">
+          {% if page_obj.has_previous %}
+              <a href="?page=1">&laquo; first</a>
+              <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+          {% endif %}
+
+          <span class="current">
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+          </span>
+
+          {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}">next</a>
+              <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+      </span>
+    </div>
+  </div>
+  {% elif 'Drug' in type %}
+  {% else %}
+    {{type}}
+  {% endif%}
+</div>-->
 
 
 

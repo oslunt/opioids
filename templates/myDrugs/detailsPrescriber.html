@@ -1,0 +1,69 @@
+{%extends 'search.html'%}
+{% load static %}
+{%block results%}
+
+
+<div class="body-text">
+  <div class="body-search">
+    <table class="mytable">
+      <tr class="trheader">
+        <th>Name</th>
+        <th>{{prescriber_obj.fname}} {{prescriber_obj.lname}}</th>
+      </tr>
+      <tr class="trheader">
+        <th>Gender</th>
+        <th>{{prescriber_obj.gender}}</th>
+      </tr>
+      <tr class="trheader">
+        <th>Credentials</th>
+        <th>{{prescriber_obj.credential}}</th>
+      </tr>
+      <tr class="trheader">
+        <th>Location</th>
+        <th>{{prescriber_obj.state}}</th>
+      </tr>
+      <tr class="trheader">
+        <th>Specialty</th>
+        <th>{{prescriber_obj.specialty}}</th>
+      </tr>
+    </table>
+    <br><br>
+    <table class="mytable">
+      <tr class="trheader">
+        <th>Drug</th>
+        <th>Quantity Prescribed</th>
+        <th>Average Quantity Prescribed</th>
+      </tr>
+      {% for drug in page_obj %}
+        <tr>
+          <th>{{drug.drugname}}</th>
+          <th>{{drug.quantity}}</th>
+          <th>{{drug.average}}</th>
+        </tr>
+      {% endfor %}
+    </table>
+    <br>
+    <div class="right">
+      <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+      </div>
+    </div>
+    <br>
+  </div>
+</div>
+{%endblock%}
+

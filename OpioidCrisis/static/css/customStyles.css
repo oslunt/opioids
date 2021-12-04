@@ -120,3 +120,165 @@ tr {
 .search-bar-records {
     max-width: 600px;
 }
+
+
+/*==============records page============*/
+
+.record-inner-container {
+    padding: 6rem;
+}
+
+a.btn.btn-primary.edit-delete {
+    float: right;
+    margin: 3px;
+}
+
+.records-table {
+    border: #a7a4a4 1px solid;
+    height: 46px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.add-pres-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.record-name {
+    margin-right: auto;
+    margin-left: 5px;
+}
+
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    justify-content: center;
+    margin-bottom: 5rem;
+}
+
+.record-inner-container {
+    padding: 3rem 18rem;
+}
+
+.add-pres {
+    background-color: #008100;
+    border-color: #007c00;
+}
+
+.edit-btn {
+    color: #fff;
+    background-color: #0086f9;
+    border-color: #0086f9;
+}
+
+.del-btn {
+    color: #fff;
+    background-color: #f10017;
+    border-color: #f10017;
+}
+
+@media only screen and (max-width: 1411px) {
+    .record-inner-container {
+        padding: 3rem 1rem;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .record-inner-container {
+        padding: 3rem 10rem;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .record-inner-container {
+        padding: 3rem 1rem;
+    }
+}
+
+
+/*=========edit form=========*/
+
+* {
+    box-sizing: border-box;
+}
+
+.section-form {
+    max-width: 37em;
+    margin: 3em auto;
+    background-color: #f3efe7;
+    padding: 2em;
+    margin-top: 8rem;
+}
+
+.section-form .intro {
+    margin-bottom: 2em;
+}
+
+.section-form h1 {
+    text-align: center;
+    margin-bottom: 0.6em;
+}
+
+.section-form h2 {
+    text-align: center;
+}
+
+input[type=text] {
+    height: 45px;
+}
+
+input[type=text] {
+    width: 100%;
+    margin-bottom: 1em;
+    padding: .5em 1em;
+    border: none;
+}
+
+input[type=button] {
+    cursor: pointer;
+    margin: 0;
+    padding: .5em 2em;
+    background: #636363;
+    border: none;
+    color: #fff;
+}
+
+select {
+    display: block;
+    margin-bottom: 12px;
+    width: 100%;
+    height: 45px;
+    border: none;
+}
+
+.pres-form-sub {
+    background-color: #ffc800;
+    padding: 10px 34px;
+    border: none;
+    border-radius: 5px;
+}
+
+a.pres-form-sub {
+    margin-left: 5px;
+    color: black;
+    text-decoration: none;
+    padding: 11.5px 26px;
+    cursor: pointer;
+}
+
+.search-form {
+    display: flex;
+    margin-bottom: 0;
+}
+
+#record-search {
+    width: 261px;
+    margin-right: 6px;
+    padding: 0px;
+}

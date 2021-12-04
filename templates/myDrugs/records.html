@@ -1,15 +1,43 @@
 {%extends 'base.html'%}
 {% load static %}
 {%block content%}
-<br><br><br>
-<h1><b>Prescriber List</b></h1>
+<br><br><br><br><br><br>
+<div class="outer-container">
+<div class="record-inner-container">
+    
+    
+    <div class="add-pres-cont">
+    <h1><b>Prescriber List</b></h1>
+    <form method="POST" action="{% url 'searchRecords' %}" class="search-form">
+        {%csrf_token%}
+        <input type="search" id="record-search" name="record-search"placeholder="Search By Last Name"/>
+        <input type="submit" id="record-search-submit" name="record-search-submit"value="Search" class="btn btn-primary"/>
+    </form>
+    </div>
+    
+    <p class="records-table" style="background-color:#e5e5e5;">
+        <span class="record-name">
+    <b>Last Name, First Name</b>
+        </span>
+        <a class="btn btn-primary add-pres" href="{% url 'addPrescriber' %}">Add Prescriber</a>
+    </p>
+    
 {% for prescriber in page_obj %}
-    {# Each "prescriber" is a prescriber model object. #}
-    <p>
+    <p class="records-table">
+        <span class="record-name">
     {{ prescriber.lname|capfirst }}, {{ prescriber.fname|capfirst }}
-    <a class="btn btn-primary" href="{% url 'showSingleRecord' pres_id=prescriber.npi %}">Edit</a>
-    </P>
+        </span>
+    <a class="btn btn-primary edit-delete edit-btn" href="{% url 'showSingleRecord' pres_id=prescriber.npi %}">Edit</a>
+    <a class="btn btn-primary edit-delete del-btn"  href="{% url 'deletePrescriber' pres_id=prescriber.npi %}" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+    </p>
+    
+    
+    
+    
 {% endfor %}
+</div>
+</div>
+</div>
 
 <div class="pagination">
     <span class="step-links">
@@ -28,6 +56,9 @@
         {% endif %}
     </span>
 </div>
+
+
+    
 
 {%endblock%}
 

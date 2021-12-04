@@ -27,7 +27,7 @@ def recordsPageView(request):
     contact_list = Prescriber.objects.all()
     # To return a new list, use the sorted() built-in function...
     newlist = sorted(contact_list, key=lambda x: (x.lname + x.fname), reverse=False)   
-    paginator = Paginator(newlist, 10) # Show 25 contacts per page.
+    paginator = Paginator(newlist, 15) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 

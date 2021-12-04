@@ -270,3 +270,14 @@ a.pres-form-sub {
     padding: 11.5px 26px;
     cursor: pointer;
 }
+
+.search-form {
+    display: flex;
+    margin-bottom: 0;
+}
+
+#record-search {
+    width: 261px;
+    margin-right: 6px;
+    padding: 0px;
+}

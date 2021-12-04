@@ -1,14 +1,26 @@
 {%extends 'base.html'%}
 {% load static %}
 {%block content%}
-<br><br><br>
+<br><br><br><br><br><br>
 <div class="outer-container">
 <div class="record-inner-container">
+    
+    
     <div class="add-pres-cont">
     <h1><b>Prescriber List</b></h1>
-    <a class="btn btn-primary add-pres" href="{% url 'addPrescriber' %}">Add Prescriber</a>
+    <form method="POST" action="{% url 'searchRecords' %}" class="search-form">
+        {%csrf_token%}
+        <input type="search" id="record-search" name="record-search"placeholder="Search By Last Name"/>
+        <input type="submit" id="record-search-submit" name="record-search-submit"value="Search" class="btn btn-primary"/>
+    </form>
     </div>
-
+    
+    <p class="records-table" style="background-color:#e5e5e5;">
+        <span class="record-name">
+    <b>Last Name, First Name</b>
+        </span>
+        <a class="btn btn-primary add-pres" href="{% url 'addPrescriber' %}">Add Prescriber</a>
+    </p>
     
 {% for prescriber in page_obj %}
     <p class="records-table">

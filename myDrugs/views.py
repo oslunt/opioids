@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Q
 from .models import Prescriber, State
 from django.core.paginator import Paginator
 from django.http import HttpResponse
@@ -27,7 +28,7 @@ def recordsPageView(request):
     contact_list = Prescriber.objects.all()
     # To return a new list, use the sorted() built-in function...
     newlist = sorted(contact_list, key=lambda x: (x.lname + x.fname), reverse=False)   
-    paginator = Paginator(newlist, 10) # Show 25 contacts per page.
+    paginator = Paginator(newlist, 15) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -90,3 +91,20 @@ def showStateDropDownListView(request):
         "state": state,
     }
     return render(request, 'myDrugs/addPrescriber.html', context)
+
+
+def searchRecordsPageView(request):
+    if request.method == "POST":
+        searched = request.POST.get('record-search')
+        prescriber = (Prescriber.objects.filter(fname__icontains=searched)|Prescriber.objects.filter(lname__icontains=searched))
+        
+        
+    # To return a new list, use the sorted() built-in function...
+        newlist = sorted(prescriber, key=lambda x: (x.lname + x.fname), reverse=False)   
+        paginator = Paginator(newlist, 15) # Show 25 contacts per page.
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, 'myDrugs/searchRecords.html',{'searched': searched, 'prescriber':prescriber, 'page_obj': page_obj} )
+    else:
+        return render(request, 'myDrugs/searchRecords.html',{} )

@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+
+    <div class="section-form">
+        <form name="form" method="post" action="{% url 'addPrescriber'%}">
+            <div class="intro"> 
+                <h2>Add Prescriber</h2>
+              </div>
+          {% csrf_token %}
+          <label for="npi"> NPI:</label>
+          <input type="text" name="npi" id="npi" autofocus required>
+          
+          <label for="fname" > First Name:</label>
+          <input type="text" name="fname" id="fname" required>
+          
+      
+          <label for="lname" > Last Name:</label>
+          <input type="text" name="lname" id="lname" required>
+          
+      
+          <label for="gender" > Gender:</label>
+          <select name="gender"id="gender" required>
+              <option value="" disabled selected>Choose One</option>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+          </select>
+          
+      
+          
+          <label for="state" > State:</label>
+          <select name="state" id="state" required>
+              <option value="" selected="selected">Select a State</option>
+              <option value="Alabama">Alabama</option>
+              <option value="Alaska">Alaska</option>
+              <option value="Arizona">Arizona</option>
+              <option value="Arkansas">Arkansas</option>
+              <option value="California">California</option>
+              <option value="Colorado">Colorado</option>
+              <option value="Connecticut">Connecticut</option>
+              <option value="Delaware">Delaware</option>
+              <option value="Florida">Florida</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Hawaii">Hawaii</option>
+              <option value="Idaho">Idaho</option>
+              <option value="Illinois">Illinois</option>
+              <option value="Indiana">Indiana</option>
+              <option value="Iowa">Iowa</option>
+              <option value="Kansas">Kansas</option>
+              <option value="Kentucky">Kentucky</option>
+              <option value="Louisiana">Louisiana</option>
+              <option value="Maine">Maine</option>
+              <option value="Maryland">Maryland</option>
+              <option value="Massachusetts">Massachusetts</option>
+              <option value="Michigan">Michigan</option>
+              <option value="Minnesota">Minnesota</option>
+              <option value="Mississippi">Mississippi</option>
+              <option value="Missouri">Missouri</option>
+              <option value="Montana">Montana</option>
+              <option value="Nebraska">Nebraska</option>
+              <option value="Nevada">Nevada</option>
+              <option value="New Hampshire">New Hampshire</option>
+              <option value="New Jersey">New Jersey</option>
+              <option value="New Mexico">New Mexico</option>
+              <option value="New York<">New York</option>
+              <option value="North Carolina">North Carolina</option>
+              <option value="North Dakota">North Dakota</option>
+              <option value="Ohio">Ohio</option>
+              <option value="Oklahoma">Oklahoma</option>
+              <option value="Oregon">Oregon</option>
+              <option value="Pennsylvania<">Pennsylvania</option>
+              <option value="Rhode Island">Rhode Island</option>
+              <option value="South Carolina">South Carolina</option>
+              <option value="South Dakota">South Dakota</option>
+              <option value="Tennessee">Tennessee</option>
+              <option value="Texas">Texas</option>
+              <option value="Utah">Utah</option>
+              <option value="Vermont">Vermont</option>
+              <option value="Virginia">Virginia</option>
+              <option value="Washington">Washington</option>
+              <option value="West Virginia">West Virginia</option>
+              <option value="Wisconsin">Wisconsin</option>
+              <option value="Wyoming">Wyoming</option>
+              <option value="Washington DC">Washington DC</option>
+              <option value="Washington DC">Puerto Rico</option>
+              <option value="Washington DC">Virgin Islands</option>
+              <option value="American Armed Forces in Europe">American Armed Forces in Europe</option>
+            </select>
+          
+      
+      
+      
+          <label for="specialty" > Specialty:</label>
+          <input type="text" name="specialty" id="specialty" required>
+          
+      
+      
+          <label for="isopioidprescriber" > Is Opioid Prescriber?</label>
+          <select name="isopioidprescriber" id="isopioidprescriber" required>
+              <option value="" disabled selected>Choose One</option>
+              <option value="True">True</option>
+              <option value="False">False</option>
+          </select>
+          
+      
+          <label for="totalprescriptions" > Total Prescriptions:</label>
+          <input type="text" name="totalprescriptions" id="totalprescriptions" required>
+          
+    <button type="submit" class="pres-form-sub ">Add</button><a class="pres-form-sub" href="{% url 'records'%}">Cancel</a>
+        </form>
+      </div>
+
+
+</div>
+
+{% endblock %}

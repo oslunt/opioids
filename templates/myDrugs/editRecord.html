@@ -1,53 +1,54 @@
-<!--video 2 starting at 15:00
-start project from here
--->
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
 <div class="container">
-    <div>
-        <h2 class="text-left">Prescribers</h2>
-    </div>
-    <br>
-    <form name="form" method="post" action="{% url 'updatePres' %}">
-    {% csrf_token %}
-    <input type="hidden" id="pres_id" name="pres_id" value="{{record.npi}}">
-    <label for="fname" > First Name:</label>
-    <input type="text" name="fname" id="fname" value="{{record.fname}}" autofocus>
-    <br><br>
+    
 
-    <label for="lname" > Last Name:</label>
-    <input type="text" name="lname" id="lname" value="{{record.lname}}">
-    <br><br>
+    <div class="section-form">
+        <form name="form" method="post" action="{% url 'updatePres' %}">
+          <div class="intro"> 
+            <h2>Update Prescriber</h2>
+          </div>
+          {% csrf_token %}
+          <input type="hidden" id="pres_id" name="pres_id" value="{{record.npi}}">
+          <label for="fname" > First Name:</label>
+          <input type="text" name="fname" id="fname" value="{{record.fname}}" autofocus required>
+          <label for="lname" > Last Name:</label>
+        <input type="text" name="lname" id="lname" value="{{record.lname}}" required>        
+        <label for="gender" > Gender:</label>
+        <select name="gender" id="gender" required>
+            {%if record.gender == "F"%}
+            <option value="F">Female</option>
+            <option value="M">Male</option>
+            {%elif record.gender == "M"%}
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+            {%endif%}
+        </select>
+        <label for="state" > State:</label>
 
-    <label for="gender" > Gender:</label>
-    <input type="text" name="gender" id="gender" value="{{record.gender}}">
-    <br><br>
-
-    <label for="state" > State:</label>
-    <input type="text" name="state" id="state" value="{{record.state}}">
-    <br><br>
-
-    <label for="specialty" > Specialty:</label>
-    <input type="text" name="specialty" id="specialty" value="{{record.specialty}}">
-    <br><br>
-
-    <label for="isopioidprescriber" > Is Opioid Prescriber?</label>
-    <input type="text" name="isopioidprescriber" id="isopioidprescriber" value="{{record.isopioidprescriber}}">
-
-    <br><br>
-
+        <select id="state" name="state" required>
+            <option value="{{ record.state }}" selected>{{ record.state }}</option>
+            {% for x in state %}
+            <option value="{{ x }}">{{ x }}</option>
+            {% endfor %}
+        </select>
+        <label for="specialty" > Specialty:</label>
+        <input type="text" name="specialty" required id="specialty" value="{{record.specialty}}">
+        <label for="isopioidprescriber" > Is Opioid Prescriber?</label>
+    <input type="text" name="isopioidprescriber" required id="isopioidprescriber" value="{{record.isopioidprescriber}}">
     <label for="totalprescriptions" > Total Prescriptions:</label>
-    <input type="text" name="totalprescriptions" id="totalprescriptions" value="{{record.totalprescriptions}}">
-    <br><br>
-
-
-
-    <button type="submit">Update</button>
-    </form>
+    <input type="text" name="totalprescriptions" required id="totalprescriptions" value="{{record.totalprescriptions}}">
+    <button type="submit" class="pres-form-sub " onclick="return confirm('Are you sure you want to update this prescriber?')">Update</button><a class="pres-form-sub" href="{% url 'records'%}">Cancel</a>
+        </form>
+      </div>
 
 
 
 </div>
+
+
+    
+
 
 {% endblock %}

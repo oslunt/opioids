@@ -22,31 +22,31 @@ def detailsPageView(request):
 
 def analysisPageView(request):
     return render(request, "myDrugs/analysis.html")
-""""
-def recordsPageView(request):
-    data = Prescriber.objects.all()
-    context = {
-        "pres" : data
-    }
-    return render(request, "myDrugs/records.html", context)
-"""
+
 def recordsPageView(request):
     contact_list = Prescriber.objects.all()
-    paginator = Paginator(contact_list, 15) # Show 25 contacts per page.
-
+    # To return a new list, use the sorted() built-in function...
+    newlist = sorted(contact_list, key=lambda x: (x.lname + x.fname), reverse=False)   
+    paginator = Paginator(newlist, 10) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
     return render(request, 'myDrugs/records.html', {'page_obj': page_obj})
 
 
 def showSingleRecordPageView(request, pres_id):
     data = Prescriber.objects.get(npi = pres_id)
+    state = State.objects.all()
     context = {
         "record": data,
+        "state": state,
     }
-
     return render(request, 'myDrugs/editRecord.html', context)
 
+def deletePrescriberPageView(request, pres_id):
+    data = Prescriber.objects.get(npi = pres_id)
+    data.delete()
+    return recordsPageView(request)
 
 def updatePrescribersPageView(request):
     if request.method == "POST":
@@ -54,19 +54,39 @@ def updatePrescribersPageView(request):
 
         prescriber = Prescriber.objects.get(npi = pres_id)
 
-        
-        Prescriber.state = State.objects.get(statename = state.name)##fix this ish
-        
-
-
         prescriber.fname = request.POST['fname']
         prescriber.lname = request.POST['lname']
         prescriber.gender = request.POST['gender']
-        prescriber.state = request.POST['state']
+        prescriber.state = State.objects.get(statename = request.POST['state'])
         prescriber.specialty = request.POST['specialty']
         prescriber.isopioidprescriber = request.POST['isopioidprescriber']
         prescriber.totalprescriptions = request.POST['totalprescriptions']
 
         prescriber.save()
     return recordsPageView(request)
+    
 
+def addPrescriberPageView(request):
+    if request.method == "POST":
+
+        prescriber = Prescriber()
+
+        prescriber.npi = request.POST['npi']
+        prescriber.fname = request.POST['fname']
+        prescriber.lname = request.POST['lname']
+        prescriber.gender = request.POST['gender']
+        prescriber.state = State.objects.get(statename = request.POST['state'])
+        prescriber.specialty = request.POST['specialty']
+        prescriber.isopioidprescriber = request.POST['isopioidprescriber']
+        prescriber.totalprescriptions = request.POST['totalprescriptions']
+        prescriber.save()
+        return recordsPageView(request)
+    else:
+        return render(request, 'myDrugs/addPrescriber.html')
+
+def showStateDropDownListView(request):
+    state = State.objects.all()
+    context = {
+        "state": state,
+    }
+    return render(request, 'myDrugs/addPrescriber.html', context)

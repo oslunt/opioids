@@ -1,0 +1,34 @@
+{%extends 'search.html'%}
+{% load static %}
+{%block results%}
+
+
+<div class="body-text">
+  <div class="body-search">
+    <table class="mytable">
+      <tr class="trheader">
+        <th>Name</th>
+        <th>{{drug_obj.drugname}}</th>
+      </tr>
+      <tr class="trheader">
+        <th>Is Opioid</th>
+        <th>{{drug_obj.isopioid}}</th>
+      </tr>
+    </table>
+    <br><br>
+    <table class="mytable">
+      <tr class="trheader">
+        <th>Prescriber</th>
+        <th>Quantity Prescribed</th>
+      </tr>
+      {% for prescriber in page_obj %}
+        <tr>
+          <th>{{prescriber.fname}} {{prescriber.lname}}</th>
+          <th>{{prescriber.quantity}}</th>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{%endblock%}
+

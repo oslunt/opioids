@@ -1,0 +1,67 @@
+{%extends 'search.html'%}
+{% load static %}
+{%block results%}
+
+
+<div class="body-text">
+  <div class="body-search">
+  <p>Choose Search Type</p>
+    <form method="GET" action="{% url 'prescriber' %}"> {% csrf_token %}
+      <select name="searchtype" id="searchtype">
+        <option value="fname">First Name</option>
+        <option value="lname">Last Name</option>
+        <option value="gender">Gender</option>
+        <option value="credential">Credentials</option>
+        <option value="state">Location</option>
+        <option value="specialty">Specialty</option>
+      </select><br><br>
+      <input type="search" id="search" name="search" placeholder="Search"/>
+      <br><br>
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+<table class="mytable">
+  <tr class="trheader">
+    <th>Name</th>
+    <th>Gender</th>
+    <th>Credentials</th>
+    <th>Location</th>
+    <th>Specialty</th>
+    <th></th>
+  </tr>
+  {% for row in page_obj %}
+    <tr>
+      <th>{{row.fname}} {{row.lname}}</th>
+      <th>{{row.gender}}</th>
+      <th>{{row.credential}}</th>
+      <th>{{row.state}}</th>
+      <th>{{row.specialty}}</th>
+      <th><a href="{% url 'detailsPrescriber' prescriber=row.npi %}">Details</a></th>
+    </tr>
+  {% endfor %}
+</table>
+<div class="right">
+  <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+  </div>
+</div>
+</div>
+
+
+{%endblock%}
+

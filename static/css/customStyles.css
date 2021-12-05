@@ -24,7 +24,7 @@ body {
     width: 300px;
     position: fixed;
     left: 0;
-    top: 5.5em;
+    top: 4.5em;
     bottom: 0;
     padding-top: 10px;
     background-color: rgb(236, 236, 236);
@@ -33,7 +33,7 @@ body {
 
 .sidebar div {
     padding: 8px;
-    font-size: 24px;
+    font-size: 18px;
     display: block;
 }
 
@@ -146,6 +146,7 @@ a.btn.btn-primary.edit-delete {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .record-name {
@@ -194,7 +195,7 @@ a.btn.btn-primary.edit-delete {
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 666px) {
     .record-inner-container {
         padding: 3rem 1rem;
     }
@@ -280,4 +281,17 @@ a.pres-form-sub {
     width: 261px;
     margin-right: 6px;
     padding: 0px;
+}
+
+select {
+    width: 100%;
+}
+
+button[type="submit"] {
+    float: right;
+    border-radius: 12px;
+}
+
+.right {
+    float: right;
 }

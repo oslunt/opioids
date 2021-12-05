@@ -127,8 +127,6 @@ def detailsDrugPageView(request, drug):
     }
     return render(request, "myDrugs/detailsDrug.html", data)
 
-def analysisPageView(request):
-    return render(request, "myDrugs/analysis.html")
 
 def recordsPageView(request):
     contact_list = Prescriber.objects.all()
@@ -214,3 +212,10 @@ def searchRecordsPageView(request):
         return render(request, 'myDrugs/searchRecords.html',{'searched': searched, 'prescriber':prescriber, 'page_obj': page_obj} )
     else:
         return render(request, 'myDrugs/searchRecords.html',{} )
+
+
+def analysisPageView(request):
+
+    
+    return render(request, "myDrugs/analysis.html", {})
+

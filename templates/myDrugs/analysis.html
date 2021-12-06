@@ -24,9 +24,24 @@ where isopioid = false);
 
 
 -->
-
+<br><br><br><br><br>
+<div>
+   <center>
+      <form class="analysisform" method="get" action="{% url 'analysis' %}"> {% csrf_token %}
+         <select class ="searchselect" name="analysischoice" id="analysischoice">
+            <option value="1">Who is currently prescribing only opioids?</option>
+            <option value="2">Who is currently prescribing high levels of opioids (compared to other non-opioid drugs)?</option>
+            <option value="3">How many opioid drugs have been prescribed?</option>
+            <option value="4">What opioid drug has been prescribed the most?</option>
+            <option value="5">What state has the most opioid related deaths?</option>
+         </select><br>
+         <button type="submit">Select</button>
+      </form>
+   </center>
+</div>
 
 <main class="tab-outer-container">
+   {% if type == '2' %}
    <div class="text-container-tab">   
       <div class="tab-container1">
          <div class="tab-container2">
@@ -44,6 +59,7 @@ where isopioid = false);
             </p>
          </div>
    </div>
+   {% elif type == '3'%}
    <div class="text-container-tab">   
       <div class="tab-container1">
          <div class="tab-container2">
@@ -61,6 +77,7 @@ where isopioid = false);
             </p>
          </div>
    </div>
+   {% elif type == '4'%}
    <div class="text-container-tab">   
       <div class="tab-container1">
          <div class="tab-container2">
@@ -78,6 +95,7 @@ where isopioid = false);
             </p>
          </div>
    </div>
+   {% elif type == '5'%}
    <div class="text-container-tab">   
       <div class="tab-container1">
          <div class="tab-container2">
@@ -95,7 +113,7 @@ where isopioid = false);
             </p>
          </div>
    </div>
-   
+   {% elif type == '1'%}
    <h4>Currently Prescribing Only Opioids</h4>
    <table>
       <tr class="trheader">
@@ -117,6 +135,7 @@ where isopioid = false);
          </tr>
       {% endfor %}
    </table>
+   {% endif %}
 
 
 

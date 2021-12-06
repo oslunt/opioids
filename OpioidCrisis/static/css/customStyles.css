@@ -46,6 +46,8 @@ body {
     display: flex;
     flex-direction: column;
     margin-top: 5.5em;
+    overflow: scroll;
+    overflow-y: hidden;
 }
 
 .body-search {
@@ -347,4 +349,8 @@ button[type="submit"]:hover {
     .tab-container1 {
         overflow: scroll;
     }
+}
+
+.analysisform {
+    width: 80%;
 }

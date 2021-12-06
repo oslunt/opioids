@@ -215,7 +215,13 @@ def searchRecordsPageView(request):
 
 
 def analysisPageView(request):
-
-    
-    return render(request, "myDrugs/analysis.html", {})
+    cursor2 = connection.cursor()
+    query2 = "select fname, lname, gender, credential, s.statename, specialty from prescriber p left join(select pd.npi, d.drugid, d.drugname from drug d inner join prescriberdrug pd on d.drugid = pd.drugid where d.isopioid = False) temps on p.npi = temps.npi inner join state s on p.state = s.state where temps.npi is null"
+    cursor2.execute(query2)
+    columns2 = [col[0] for col in cursor2.description]
+    page_obj = [dict(zip(columns2, row)) for row in cursor2.fetchall()]
+    data = {
+        'page_obj': page_obj,
+    }
+    return render(request, "myDrugs/analysis.html", data)
 

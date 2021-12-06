@@ -7,11 +7,11 @@
   <div class="body-search">
     <p>Choose Search Type</p>
     <form method="get" action="{% url 'drug' %}"> {% csrf_token %}
-      <select name="searchtypedrug" id="searchtypedrug">
+      <select class ="searchselect" name="searchtypedrug" id="searchtypedrug">
         <option value="drugname">Drug Name</option>
         <option value="isopioid">Is Opioid</option>
       </select><br><br>
-      <input type="search" id="drugsearch" name="drugsearch" placeholder="Search"/>
+      <input class ="searchselect" type="search" id="drugsearch" name="drugsearch" placeholder="Search"/>
       <br><br>
       <button type="submit">Search</button>
     </form>

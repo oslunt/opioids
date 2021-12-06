@@ -309,6 +309,8 @@ button[type="submit"] {
     padding: 1rem;
     overflow: scroll;
     background-color: inherit;
+    width: 100vw;
+    max-width: 700;
 }
 
 .tab-container1 {
@@ -331,5 +333,8 @@ button[type="submit"] {
         flex-direction: column-reverse;
         /* align-items: center; */
         align-content: center;
+    }
+    .tab-container1 {
+        overflow: scroll;
     }
 }

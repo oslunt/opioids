@@ -121,7 +121,7 @@ tr {
     max-width: 600px;
 }
 
-
+<<<<<<< HEAD
 /*==============records page============*/
 
 .record-inner-container {
@@ -294,4 +294,47 @@ button[type="submit"] {
 
 .right {
     float: right;
+}
+
+.tab-outer-container {
+    margin: 10rem 5rem;
+    /*display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;*/
+}
+
+.tab-container2 {
+    padding: 1rem;
+    overflow: scroll;
+    background-color: inherit;
+    width: 100vw;
+    max-width: 700;
+}
+
+.tab-container1 {
+    padding: 3rem;
+    margin: 0rem 2rem;
+    margin-bottom: 5rem;
+    box-shadow: 0px 0px 25px -3px rgba(163, 163, 163, 0.79);
+    border-radius: 0.5rem;
+    max-width: 800px;
+    width: 100%;
+}
+
+.text-container-tab {
+    display: flex;
+}
+
+@media only screen and (max-width: 1411px) {
+    .text-container-tab {
+        display: flex;
+        flex-direction: column-reverse;
+        /* align-items: center; */
+        align-content: center;
+    }
+    .tab-container1 {
+        overflow: scroll;
+    }
 }

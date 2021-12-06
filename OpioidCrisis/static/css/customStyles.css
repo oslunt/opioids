@@ -283,13 +283,23 @@ a.pres-form-sub {
     padding: 0px;
 }
 
-select {
+.searchselect {
     width: 100%;
+    border: 1px solid black;
+    border-radius: 12px;
+    height: 40px;
 }
 
 button[type="submit"] {
     float: right;
     border-radius: 12px;
+    background-color: #ffc800;
+    border: transparent;
+    height: 40px;
+}
+
+button[type="submit"]:hover {
+    background-color: #cca000;
 }
 
 .right {

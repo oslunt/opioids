@@ -7,7 +7,7 @@
     <br>
     <p>Choose Type</p>
     <form method="POST" action="{% url 'search' %}"> {% csrf_token %}
-      <select name="database" id="database">
+      <select class="searchselect" name="database" id="database">
         <option value="Prescriber">Prescriber</option>
         <option value="Drug">Drug</option>
       </select><br><br>

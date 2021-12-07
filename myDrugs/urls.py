@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import indexPageView, searchPageView, detailsPageView, recordsPageView, analysisPageView, showSingleRecordPageView, updatePrescribersPageView, deletePrescriberPageView, addPrescriberPageView, showStateDropDownListView, searchRecordsPageView, prescriberSearchPageView, drugSearchPageView, detailsDrugPageView
 
-
+# URLS patterns and paths for navigating the website
 urlpatterns = [
     path("search/prescriber/<int:prescriber>", detailsPageView, name="detailsPrescriber"),
     path("search/prescriber/", prescriberSearchPageView, name="prescriber"),

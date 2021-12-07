@@ -1,12 +1,11 @@
-from django.db.models.aggregates import Avg
 from django.db.models.query_utils import PathInfo
 from django.shortcuts import redirect, render
-from .models import Drug, Prescriber, Prescriberdrug, State
+from .models import Drug, Prescriber, State
 from django.core.paginator import Paginator
-from django.http import HttpResponse, request
 from django.views.generic import ListView
 from django.db import connection
 
+# Pagination specifications
 class ContactListView(ListView):
     paginate_by = 2
     model = Prescriber
@@ -29,6 +28,7 @@ def searchPageView(request):
             return redirect('drug/')
     return render(request, "search.html", data)
 
+# Function uses pagination to display and pulls from database
 def prescriberSearchPageView(request):
     if request.method == "GET" and "search" in request.GET and "searchtype" in request.GET:
         keyword = request.GET['search']
@@ -53,6 +53,7 @@ def prescriberSearchPageView(request):
 
     return render(request, "myDrugs/prescriberSearch.html", data)
 
+# function is used to filter data for querying
 def getFilter(searchtype, keyword):
     if searchtype == 'fname':
         return Prescriber.objects.filter(fname__icontains=keyword)
@@ -68,6 +69,7 @@ def getFilter(searchtype, keyword):
     else:
         return Prescriber.objects.filter(specialty__icontains=keyword)
 
+# functions is used to connect to database, use pagination, and query the needed data
 def detailsPageView(request, prescriber):
     presciber_obj = Prescriber.objects.get(npi = prescriber)
     cursor2 = connection.cursor()
@@ -84,6 +86,7 @@ def detailsPageView(request, prescriber):
     }
     return render(request, "myDrugs/detailsPrescriber.html", data)
 
+# function is used to connect to database and get requested info and query data
 def drugSearchPageView(request):
     if request.method == "GET" and "drugsearch" in request.GET and "searchtypedrug" in request.GET:
         keyword = request.GET['drugsearch']
@@ -105,15 +108,16 @@ def drugSearchPageView(request):
         'page_obj': page_obj,
         'type': 'Drug',
     }
-
     return render(request, "myDrugs/drugSearch.html", data)
 
+# function is used to filter data for querying
 def getDrugFilter(searchtype, keyword):
     if searchtype == 'drugname':
         return Drug.objects.filter(drugname__icontains=keyword)
     else:
         return Drug.objects.filter(isopioid__icontains=keyword)
 
+# details view for drug search. Querys from database and displays to the page
 def detailsDrugPageView(request, drug):
     drug_obj = Drug.objects.get(drugid = drug)
     cursor2 = connection.cursor()
@@ -127,7 +131,7 @@ def detailsDrugPageView(request, drug):
     }
     return render(request, "myDrugs/detailsDrug.html", data)
 
-
+# for the main crud page. Uses paginator andsearch function is added
 def recordsPageView(request):
     contact_list = Prescriber.objects.all()
     # To return a new list, use the sorted() built-in function...
@@ -138,7 +142,7 @@ def recordsPageView(request):
 
     return render(request, 'myDrugs/records.html', {'page_obj': page_obj})
 
-
+# used for updating data in the crud system
 def showSingleRecordPageView(request, pres_id):
     data = Prescriber.objects.get(npi = pres_id)
     state = State.objects.all()
@@ -148,11 +152,13 @@ def showSingleRecordPageView(request, pres_id):
     }
     return render(request, 'myDrugs/editRecord.html', context)
 
+# prescriber is removed from database
 def deletePrescriberPageView(request, pres_id):
     data = Prescriber.objects.get(npi = pres_id)
     data.delete()
     return recordsPageView(request)
 
+# prescriber is updated in database in this func
 def updatePrescribersPageView(request):
     if request.method == "POST":
         pres_id = request.POST['pres_id']
@@ -170,7 +176,7 @@ def updatePrescribersPageView(request):
         prescriber.save()
     return recordsPageView(request)
     
-
+# in this view user can add a prescriber to the database
 def addPrescriberPageView(request):
     if request.method == "POST":
 
@@ -189,6 +195,7 @@ def addPrescriberPageView(request):
     else:
         return render(request, 'myDrugs/addPrescriber.html')
 
+# function is used to show state dropdown list
 def showStateDropDownListView(request):
     state = State.objects.all()
     context = {
@@ -196,7 +203,7 @@ def showStateDropDownListView(request):
     }
     return render(request, 'myDrugs/addPrescriber.html', context)
 
-
+# function is used to search data in the crud system
 def searchRecordsPageView(request):
     if request.method == "POST":
         searched = request.POST.get('record-search')
@@ -213,7 +220,7 @@ def searchRecordsPageView(request):
     else:
         return render(request, 'myDrugs/searchRecords.html',{} )
 
-
+# function is used to query data fro the analysis page view
 def analysisPageView(request):
     if request.method =="GET" and "analysischoice" in request.GET:
         type = request.GET['analysischoice']

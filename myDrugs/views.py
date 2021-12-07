@@ -4,6 +4,9 @@ from .models import Drug, Prescriber, State
 from django.core.paginator import Paginator
 from django.views.generic import ListView
 from django.db import connection
+import requests
+import json
+import math
 
 # Pagination specifications
 class ContactListView(ListView):
@@ -16,17 +19,13 @@ def indexPageView(request):
     return render(request, "myDrugs/index.html")
 
 def searchPageView(request):   
-    data = {
-        'page_obj': '',
-        'type': ''
-    }
     if request.method == "POST":
         database = request.POST['database']
         if database == 'Prescriber':
             return redirect('prescriber/')
         else:
             return redirect('drug/')
-    return render(request, "search.html", data)
+    return render(request, "search.html")
 
 # Function uses pagination to display and pulls from database
 def prescriberSearchPageView(request):
@@ -77,16 +76,67 @@ def detailsPageView(request, prescriber):
     cursor2.execute(query2, [prescriber])
     columns2 = [col[0] for col in cursor2.description]
     drug_obj = [dict(zip(columns2, row)) for row in cursor2.fetchall()]
+    cursor = connection.cursor()
+    query = "SELECT drugid, isopioid FROM drug"
+    cursor.execute(query)
+    columns = [col[0] for col in cursor.description]
+    drugs = [dict(zip(columns, row)) for row in cursor.fetchall()]
     paginator = Paginator(drug_obj, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    recommendation = prescriberRecommender(presciber_obj, drug_obj, drugs)
+    print(recommendation)
     data = {
         'prescriber_obj': presciber_obj,
         'page_obj': page_obj,
+        'recommendation': recommendation,
     }
     return render(request, "myDrugs/detailsPrescriber.html", data)
 
+
 # function is used to connect to database and get requested info and query data
+
+def prescriberRecommender(prescriber_obj, drug_obj, drugs):
+    url = "http://9483b05f-0af0-4516-a794-db3c24e3b4b5.eastus2.azurecontainer.io/score"
+
+    pd_list = []
+    for row in drug_obj:
+        pd_list.append({'npi': row['npi'], 'drugname': row['drugname'], 'quantity': row['quantity']})
+    payload = json.dumps({
+    "Inputs": {
+        "WebServiceInput3": [
+        {
+            "npi": prescriber_obj.npi,
+            "gender": prescriber_obj.gender,
+            "state": prescriber_obj.state.state,
+            "specialty": prescriber_obj.specialty,
+            "isopioidprescriber": prescriber_obj.isopioidprescriber,
+            "totalprescriptions": prescriber_obj.totalprescriptions,
+            "credential": prescriber_obj.credential
+        }
+        ],
+        "WebServiceInput1": pd_list,
+        "WebServiceInput2": drugs
+    },
+    "GlobalParameters": {}
+    })
+    headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer nvp29jiW4YEYAQF3PzWaCkLh04n3uI8f'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    json_data = json.loads(response.text)
+    retval = ''
+    for iCount in range(1, 6):
+        if iCount != 5:
+            retval = retval + json_data['Results']['WebServiceOutput0'][0]['Recommended Item ' + str(iCount)] + ", "
+        else:
+            retval = retval + json_data['Results']['WebServiceOutput0'][0]['Recommended Item ' + str(iCount)]
+    return retval
+
+
 def drugSearchPageView(request):
     if request.method == "GET" and "drugsearch" in request.GET and "searchtypedrug" in request.GET:
         keyword = request.GET['drugsearch']
@@ -125,13 +175,77 @@ def detailsDrugPageView(request, drug):
     cursor2.execute(query2, [drug])
     columns2 = [col[0] for col in cursor2.description]
     page_obj = [dict(zip(columns2, row)) for row in cursor2.fetchall()]
+    cursor = connection.cursor()
+    query = "SELECT npi, gender, state, specialty, isopioidprescriber, totalprescriptions, credential from prescriber"
+    cursor.execute(query)
+    columns = [col[0] for col in cursor.description]
+    prescriber = [dict(zip(columns, row)) for row in cursor.fetchall()]
+    cursor3 = connection.cursor()
+    query3 = "SELECT pd.drugid, p.fname || ' ' || p.lname as fullname, pd.quantity from prescriber p inner join prescriberdrug pd on p.npi = pd.npi"
+    cursor3.execute(query3)
+    columns3 = [col[0] for col in cursor3.description]
+    prescriberdrug = [dict(zip(columns3, row)) for row in cursor3.fetchall()]
+    #recommendation = drugRecommender(drug_obj, prescriber, prescriberdrug)
     data = {
         'drug_obj': drug_obj,
         'page_obj': page_obj,
+        #'recommendation': recommendation
     }
     return render(request, "myDrugs/detailsDrug.html", data)
 
-# for the main crud page. Uses paginator andsearch function is added
+def drugRecommender(drug_obj, prescriber, prescriberdrug):
+    url = "http://9c830994-51e0-47a0-9611-741637712e12.eastus2.azurecontainer.io/score"
+    tempPrescriber =[]
+    for row in prescriber:
+        print(row)
+        break
+    for row in prescriber:
+        tempPrescriber.append({
+            'fullName': row['npi'],
+            'gender': row['gender'],
+            'state': row['state'],
+            'specialty': row['specialty'],
+            'isopioidprescriber': row['isopioidprescriber'],
+            'totalprescriptions': row['totalprescriptions'],
+            'credential': row['credential']
+        })
+    tempPrescriberDrug = []
+    for row in prescriberdrug:
+        tempPrescriberDrug.append({
+            'drugid': row['drugid'],
+            'fullName': row['fullname'],
+            'quantity': row['quantity']
+        })
+    payload = json.dumps({
+    "Inputs": {
+        "WebServiceInput3": prescriber,
+        "WebServiceInput1": prescriberdrug,
+        "WebServiceInput0": [
+        {
+            "drugid": drug_obj.drugid,
+            "isopioid": drug_obj.isopioid
+        }
+        ]
+    },
+    "GlobalParameters": {}
+    })
+    headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer vO7LRHSFfZ19D4P5if2XTcUJk7BGgDv0'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    json_data = json.loads(response.text)
+    retval = ''
+    print(json_data)
+    for iCount in range(1, 6):
+        if iCount != 5:
+            retval = retval + json_data['Results']['WebServiceOutput0'][0]['Recommended Item ' + str(iCount)] + ', '
+        else :
+            retval = retval + json_data['Results']['WebServiceOutput0'][0]['Recommended Item ' + str(iCount)]
+    return retval
+
 def recordsPageView(request):
     contact_list = Prescriber.objects.all()
     # To return a new list, use the sorted() built-in function...
@@ -237,3 +351,115 @@ def analysisPageView(request):
     }
     return render(request, "myDrugs/analysis.html", data)
 
+def predictionPageView(request):
+    if request.method == "POST":
+        prediction = request.POST['prediction']
+        if prediction == 'prescriber':
+            return redirect('prescriber/')
+        else:
+            return redirect('drug/')
+    return render(request, "predictor.html")
+
+def calculatorPrescriberPageView(request):
+    if request.method == "GET" and "gender" in request.GET and "specialty" in request.GET and "totalprescriptions" in request.GET:
+        page_obj = calculatorClassificationAPI(request.GET['gender'], request.GET['specialty'], request.GET['totalprescriptions'])
+        searchresults = {
+            'gender': request.GET['gender'],
+            'specialty': request.GET['specialty'],
+            'totalprescriptions': request.GET['totalprescriptions'],
+            }
+    else:
+        page_obj = ''
+        searchresults = ''
+
+    data = {
+        'page_obj': page_obj,
+        'searchresults': searchresults
+    }
+
+    return render(request, "myDrugs/calculatorPrescriber.html", data)
+
+def calculatorClassificationAPI(gender, specialty, totalprescriptions):
+    url = "http://0bc87be1-4e61-43bd-a748-68a5703ed377.eastus2.azurecontainer.io/score"
+    payload = json.dumps({
+    "Inputs": {
+        "WebServiceInput0": [
+        {
+            "gender": gender,
+            "specialty": specialty,
+            "totalprescriptions": totalprescriptions
+        }
+        ]
+    },
+    "GlobalParameters": {}
+    })
+    headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer nj0N2ZMAebtfB50teywADjJ1yUSwt4VM'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    json_string = response.text
+    json_parsed = json.loads(json_string)
+    json_dic = json_parsed['Results']['WebServiceOutput0']
+
+    for key in range(0, len(json_dic)) :
+        thing = json_dic[key]
+    retval = ''
+    for key1 in thing :
+        retval = thing[key1]
+    print(retval)
+    return retval
+
+def calculatorDrugPageView(request):
+    if request.method == "GET" and "gender" in request.GET and "specialty" in request.GET and "isopioidprescriber" in request.GET:
+        page_obj = calculatorRegressionAPI(request.GET['gender'], request.GET['specialty'], request.GET['isopioidprescriber'])
+        searchresults = {
+            'gender': request.GET['gender'],
+            'specialty': request.GET['specialty'],
+            'isopioidprescriber': request.GET['isopioidprescriber'],
+            }
+    else:
+        page_obj = ''
+        searchresults = ''
+
+    data = {
+        'page_obj': page_obj,
+        'searchresults': searchresults
+    }
+
+    return render(request, "myDrugs/calculatorDrug.html", data)
+
+def calculatorRegressionAPI(gender, specialty, isopioidprescriber):
+    url = "http://6bc6e29e-0375-4330-b408-5f7bff5d0c88.eastus2.azurecontainer.io/score"
+
+    payload = json.dumps({
+    "Inputs": {
+        "WebServiceInput0": [
+        {
+            "gender": gender,
+            "specialty": specialty,
+            "isopioidprescriber": isopioidprescriber
+        }
+        ]
+    },
+    "GlobalParameters": {}
+    })
+    headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ggui3aj9ZHMSDvR6RPPqMg0byPOnPx5h'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    json_string = response.text
+    json_parsed = json.loads(json_string)
+    json_dic = json_parsed['Results']['WebServiceOutput0']
+
+    for key in range(0, len(json_dic)) :
+        thing = json_dic[key]
+    retval = ''
+    for key1 in thing :
+        retval = str(round(math.exp(thing[key1]), 2))
+    return retval

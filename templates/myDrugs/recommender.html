@@ -1,0 +1,28 @@
+{%extends 'predictor.html'%}
+{% load static %}
+{%block results%}
+
+
+<div class="body-text">
+  <div class="body-search">
+  <p>Choose a Recommender</p>
+    <form method="GET" action="{% url 'recommender' %}"> {% csrf_token %}
+      <select class ="searchselect" name="recommendertype" id="recommendertype">
+        <option value="prescriber">Prescriber</option>
+        <option value="drug">Drug</option>
+      </select><br>
+      <button type="submit">Select</button>
+    </form>
+  </div>
+  {% if type == 'prescriber' %}
+    <p>prescriber</p>
+  {% elif type == 'drug' %}
+    <p>drug</p>
+  {% else %}
+    <p>Nothing to Show</p>
+  {% endif %}
+</div>
+
+
+{%endblock%}
+

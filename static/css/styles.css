@@ -743,6 +743,7 @@ progress {
     --bs-gutter-y: 0;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     margin-top: calc(-1 * var(--bs-gutter-y));
     margin-right: calc(-0.5 * var(--bs-gutter-x));
     margin-left: calc(-0.5 * var(--bs-gutter-x));
@@ -11286,6 +11287,9 @@ header.masthead .masthead-heading {
     max-width: 26rem;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
+    height: 100%;
+    box-shadow: 0px 0px 12px -3px rgb(163 163 163 / 79%);
 }
 
 #portfolio .portfolio-item .portfolio-link {
@@ -11319,6 +11323,10 @@ header.masthead .masthead-heading {
     padding: 1.5rem;
     text-align: center;
     background-color: #fff;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }
 
 #portfolio .portfolio-item .portfolio-caption .portfolio-caption-heading {

@@ -46,6 +46,8 @@ body {
     display: flex;
     flex-direction: column;
     margin-top: 5.5em;
+    overflow: scroll;
+    overflow-y: hidden;
 }
 
 .body-search {
@@ -291,16 +293,16 @@ a.pres-form-sub {
 }
 
 button[type="submit"] {
-    float: right;
-    border-radius: 12px;
     background-color: #ffc800;
-    border: transparent;
-    height: 40px;
+    padding: 10px 34px;
+    border: none;
+    border-radius: 5px;
 }
 
-button[type="submit"]:hover {
+
+/*button[type="submit"]:hover {
     background-color: #cca000;
-}
+}*/
 
 .right {
     float: right;
@@ -347,4 +349,8 @@ button[type="submit"]:hover {
     .tab-container1 {
         overflow: scroll;
     }
+}
+
+.analysisform {
+    width: 80%;
 }

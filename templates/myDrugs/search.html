@@ -2,16 +2,17 @@
 {% load static %}
 {%block content%}
 
+
 <div class="sidebar"> 
   <div>
     <br>
     <p>Choose Type</p>
-    <form method="POST" action="{% url 'search' %}"> {% csrf_token %}
+    <form class="search-form" method="POST" action="{% url 'search' %}"> {% csrf_token %}
       <select name="database" id="database">
         <option value="Prescriber">Prescriber</option>
         <option value="Drug">Drug</option>
       </select><br><br>
-      <button type="submit">Select</button>
+      <button class="search-form-btn" type="submit">Select</button>
     </form>
   </div>
 </div>

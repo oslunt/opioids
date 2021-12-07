@@ -1,0 +1,29 @@
+{%extends 'predictor.html'%}
+{% load static %}
+{%block results%}
+
+
+<div class="body-text">
+  <div class="body-search">
+    <form method="GET" action "{% url 'calculatorPrescriber' %}"> {% csrf_token %} 
+      <label>Gender</label>
+      <input class ="searchselect" type=text name="gender" id="gender"></input>
+      <label>Specialty</label>
+      <input class ="searchselect" type=text name="specialty" id="specialty"></input>
+      <label>Total Prescriptions</label>
+      <input class ="searchselect" type=text name="totalprescriptions" id="totalprescriptions"></input>
+      <br>
+      <button type="submit">Select</button>
+    </form>
+
+    <p>Gender: {{searchresults.gender}}</p>
+    <p>Specialty: {{searchresults.specialty}}</p>
+    <p>Total Prescriptions: {{searchresults.totalprescriptions}}</p>
+    <h1>Will they prescribe opioids? {{page_obj}}</h1>
+  </div>
+</div>
+
+
+
+{%endblock%}
+

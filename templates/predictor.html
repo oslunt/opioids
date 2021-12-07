@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+{% load static %}
+{%block content%}
+
+<div class="sidebar"> 
+  <div>
+    <br>
+    <p>Choose Type of Prediction</p>
+    <form method="POST" action="{% url 'predictor' %}"> {% csrf_token %}
+      <select class="searchselect" name="prediction" id="prediction">
+        <option value="prescriber">Prescriber</option>
+        <option value="drug">Drug</option>
+      </select><br>
+      <button type="submit">Select</button>
+    </form>
+  </div>
+</div>
+  
+  {% block results %}
+  {% endblock %}
+
+<br><br><br>
+
+
+{%endblock%}
+

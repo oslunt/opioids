@@ -46,6 +46,8 @@ body {
     display: flex;
     flex-direction: column;
     margin-top: 5.5em;
+    overflow: scroll;
+    overflow-y: hidden;
 }
 
 .body-search {
@@ -121,7 +123,7 @@ tr {
     max-width: 600px;
 }
 
-HEAD
+
 /*==============records page============*/
 
 .record-inner-container {
@@ -283,13 +285,23 @@ a.pres-form-sub {
     padding: 0px;
 }
 
-select {
+.searchselect {
     width: 100%;
+    border: 1px solid black;
+    border-radius: 12px;
+    height: 40px;
 }
 
 button[type="submit"] {
     float: right;
     border-radius: 12px;
+    background-color: #ffc800;
+    border: transparent;
+    height: 40px;
+}
+
+button[type="submit"]:hover {
+    background-color: #cca000;
 }
 
 .right {
@@ -337,4 +349,8 @@ button[type="submit"] {
     .tab-container1 {
         overflow: scroll;
     }
+}
+
+.analysisform {
+    width: 80%;
 }

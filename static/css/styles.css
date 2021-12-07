@@ -743,6 +743,7 @@ progress {
     --bs-gutter-y: 0;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     margin-top: calc(-1 * var(--bs-gutter-y));
     margin-right: calc(-0.5 * var(--bs-gutter-x));
     margin-left: calc(-0.5 * var(--bs-gutter-x));
@@ -11239,7 +11240,7 @@ header.masthead {
     padding-bottom: 6rem;
     text-align: center;
     color: #fff;
-    background-image: url('../img/header-bg.jpg');
+    background-image: url('../img/opioid-crisis-in-america-848x548.jpg');
     /*check this*/
     background-repeat: no-repeat;
     background-attachment: scroll;
